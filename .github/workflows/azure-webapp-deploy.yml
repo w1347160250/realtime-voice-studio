@@ -1,4 +1,4 @@
-name: Deploy to Azure Web App
+name: RVS - Deploy Azure (Publish Profile)
 
 on:
   push:
@@ -8,6 +8,7 @@ on:
 
 jobs:
   deploy:
+    name: Deploy via Publish Profile
     runs-on: ubuntu-latest
 
     steps:
@@ -19,7 +20,7 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Deploy to Azure Web App
+      - name: Deploy to Azure App Service
         uses: azure/webapps-deploy@v3
         with:
           app-name: temp-realtime-voice

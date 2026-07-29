@@ -2,7 +2,7 @@
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 # More info on Python, GitHub Actions, and Azure App Service: https://aka.ms/python-webapps-actions
 
-name: Build and deploy Python app to Azure Web App - temp-realtime-voice
+name: RVS - Deploy Azure (OIDC)
 
 on:
   push:
@@ -12,6 +12,7 @@ on:
 
 jobs:
   build:
+    name: Build App Artifact
     runs-on: ubuntu-latest
     permissions:
       contents: read #This is required for actions/checkout
@@ -48,6 +49,7 @@ jobs:
       
 
   deploy:
+    name: Deploy via OIDC
     runs-on: ubuntu-latest
     needs: build
     permissions:
