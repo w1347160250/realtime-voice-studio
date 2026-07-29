@@ -1,0 +1,7 @@
+apps/service/.venv/
+.venv/
+apps/service/data/
+apps/service/.env
+__pycache__/
+*.pyc
+.DS_Store

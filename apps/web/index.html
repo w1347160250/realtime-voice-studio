@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <meta name="theme-color" content="#0f172a" />
+    <title>心屿 · 实时语音陪聊</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <div class="bg-orbs" aria-hidden="true">
+      <span class="orb orb-a"></span>
+      <span class="orb orb-b"></span>
+      <span class="orb orb-c"></span>
+    </div>
+
+    <div class="app-shell">
+      <header class="app-header">
+        <div class="brand">
+          <span class="brand-mark">心</span>
+          <div class="brand-text">
+            <h1>心屿</h1>
+            <p>随时开口，有人陪你聊</p>
+          </div>
+        </div>
+      </header>
+
+      <!-- Login -->
+      <section id="login-card" class="card login-card">
+        <div class="login-hero">
+          <div class="login-emoji">🌿</div>
+          <h2>欢迎回来</h2>
+          <p class="muted">输入任意用户名和密码即可开始聊天</p>
+        </div>
+        <div class="field">
+          <label for="username">用户名</label>
+          <input id="username" autocomplete="username" placeholder="例如：kayn" />
+        </div>
+        <div class="field">
+          <label for="password">密码</label>
+          <input id="password" type="password" autocomplete="current-password" placeholder="任意字符" />
+        </div>
+        <button id="login-btn" class="btn-primary btn-block">进入</button>
+        <p id="login-status" class="muted status-line"></p>
+      </section>
+
+      <!-- Chat -->
+      <section id="chat-card" class="card chat-card hidden">
+        <div class="chat-topbar">
+          <div class="chat-title">
+            <span class="status-dot"></span>
+            <h2>陪聊控制台</h2>
+          </div>
+          <button id="logout-btn" class="btn-ghost">退出</button>
+        </div>
+
+        <div class="chat-layout">
+          <aside class="sidebar">
+            <div class="sidebar-head">
+              <h3>会话记录</h3>
+              <button id="new-session-btn" class="btn-soft">+ 新会话</button>
+            </div>
+            <div id="sessions" class="sessions"></div>
+          </aside>
+
+          <main class="chat-main">
+            <div id="messages" class="messages">
+              <div class="empty-hint">
+                <div class="empty-emoji">💬</div>
+                <p>点下方「开始语音」直接开口，或输入文字聊聊</p>
+              </div>
+            </div>
+
+            <div class="dock">
+              <div class="voice-bar">
+                <button id="voice-btn" class="voice-btn">
+                  <span class="voice-ico">🎙️</span>
+                  <span class="voice-label">开始语音</span>
+                </button>
+                <span id="voice-status" class="muted"></span>
+              </div>
+              <p id="chat-status" class="muted status-line"></p>
+            </div>
+            <audio id="model-audio" autoplay></audio>
+          </main>
+        </div>
+      </section>
+    </div>
+
+    <script src="/realtime.js"></script>
+    <script src="/app.js"></script>
+  </body>
+</html>
