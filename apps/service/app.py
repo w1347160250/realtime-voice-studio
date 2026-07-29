@@ -261,6 +261,7 @@ def health() -> Any:
     chat_missing = [name for name in chat_required if not os.getenv(name, "").strip()]
     realtime_required = ["AZURE_OPENAI_API_KEY", "AZURE_OPENAI_ENDPOINT", "AZURE_OPENAI_REALTIME_DEPLOYMENT"]
     realtime_missing = [name for name in realtime_required if not os.getenv(name, "").strip()]
+    passcode_configured = bool(os.getenv("APP_ACCESS_PASSCODE", "").strip())
     azure_ready = len(chat_missing) == 0
     return jsonify(
         {
@@ -270,6 +271,8 @@ def health() -> Any:
             "missing_azure_env": chat_missing,
             "realtime_ready": len(realtime_missing) == 0,
             "missing_realtime_env": realtime_missing,
+            "access_gate_enabled": True,
+            "access_passcode_configured": passcode_configured,
         }
     )
 
@@ -292,9 +295,17 @@ def login() -> Any:
     body = request.get_json(silent=True) or {}
     username = (body.get("username") or "").strip()
     password = (body.get("password") or "").strip()
+    access_passcode = (body.get("access_passcode") or "").strip()
+    expected_passcode = os.getenv("APP_ACCESS_PASSCODE", "").strip()
 
     if not username or not password:
         return jsonify({"error": "username and password are required"}), 400
+
+    if not expected_passcode:
+        return jsonify({"error": "server access passcode is not configured"}), 503
+
+    if access_passcode != expected_passcode:
+        return jsonify({"error": "invalid access passcode"}), 403
 
     now = utc_now_iso()
     pwd_hash = hash_password(password)

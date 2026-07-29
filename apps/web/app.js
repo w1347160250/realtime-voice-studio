@@ -9,6 +9,7 @@ const els = {
   chatCard: document.getElementById("chat-card"),
   username: document.getElementById("username"),
   password: document.getElementById("password"),
+  accessPasscode: document.getElementById("access-passcode"),
   loginBtn: document.getElementById("login-btn"),
   loginStatus: document.getElementById("login-status"),
   logoutBtn: document.getElementById("logout-btn"),
@@ -95,9 +96,10 @@ async function loadMessages(sessionId) {
 async function login() {
   const username = els.username.value.trim();
   const password = els.password.value.trim();
+  const accessPasscode = (els.accessPasscode?.value || "").trim();
 
-  if (!username || !password) {
-    setLoginStatus("用户名和密码都需要填写");
+  if (!username || !password || !accessPasscode) {
+    setLoginStatus("用户名、密码、访问口令都需要填写");
     return;
   }
 
@@ -105,7 +107,11 @@ async function login() {
   const res = await fetch("/api/auth/login", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ username, password }),
+    body: JSON.stringify({
+      username,
+      password,
+      access_passcode: accessPasscode,
+    }),
   });
   const data = await res.json();
 

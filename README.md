@@ -57,6 +57,10 @@ Optional realtime:
 
 - `AZURE_OPENAI_REALTIME_VOICE` (default `alloy`)
 
+Private access gate:
+
+- `APP_ACCESS_PASSCODE` (required if you want to allow only users with a shared passcode)
+
 Optional text fallback:
 
 - `AZURE_OPENAI_CHAT_DEPLOYMENT`
